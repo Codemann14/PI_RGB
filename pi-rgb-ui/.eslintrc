@@ -4,12 +4,10 @@
         "semi": ["warn", "never"],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "max-len": "off",
-        "react/prefer-stateless-function": "off",
         "function-paren-newline": "off",
         "react/jsx-indent": "off",
-        "indent": "off",
+        "indent": ["error", 4],
         "jsx-a11y/anchor-is-valid": "off",
-        "react/prop-types": "off" ,
         "quotes": ["error", "double"],
         "no-trailing-spaces": "off"
     },

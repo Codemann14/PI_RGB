@@ -2,13 +2,13 @@ import React, { Component } from "react"
 import Home from "./Pages/Home"
 
 class App extends Component {
-	render() {
-		return (
-			<div>
-				<Home />
-			</div>
-		)
-	}
+    render() {
+        return (
+            <div>
+                <Home />
+            </div>
+        )
+    }
 }
 
-export default App;
+export default App
