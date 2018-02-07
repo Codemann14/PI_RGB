@@ -9,7 +9,8 @@
         "indent": ["error", 4],
         "jsx-a11y/anchor-is-valid": "off",
         "quotes": ["error", "double"],
-        "no-trailing-spaces": "off"
+        "no-trailing-spaces": "off",
+        "linebreak-style": "off"
     },
     "env": {
         "browser": true,
