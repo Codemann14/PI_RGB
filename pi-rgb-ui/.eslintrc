@@ -10,7 +10,9 @@
         "jsx-a11y/anchor-is-valid": "off",
         "quotes": ["error", "double"],
         "no-trailing-spaces": "off",
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "no-underscore-dangle": "off",
+        "class-methods-use-this": "off"
     },
     "env": {
         "browser": true,
