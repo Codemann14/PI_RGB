@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import WebSocket from "../Utils/WebSocket";
 
 /**
  * @namespace Components
@@ -22,6 +23,7 @@ class Lights extends Component {
     }
 
     componentDidMount() {
+        WebSocket.openWebSocket()
         this.updateCanvas()
     }
 
