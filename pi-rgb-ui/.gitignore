@@ -2,6 +2,9 @@
 
 package-lock.json
 
+# docs
+/documentation/docs
+
 #css
 /src/Styles/CSS
 

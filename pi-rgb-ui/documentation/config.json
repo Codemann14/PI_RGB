@@ -15,8 +15,9 @@
         "monospaceLinks": false,
         "default": {
             "staticFiles": {
-                "paths": ["./documentation/jsdoc-source/images"]
-            }
+                "paths": ["./documentation/images"]
+            },
+            "useLongnameInNav": true
         }
     }
 }

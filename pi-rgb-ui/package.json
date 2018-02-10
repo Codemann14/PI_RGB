@@ -1,6 +1,6 @@
 {
   "name": "pi-rgb-ui",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0-beta.2",
@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/Styles/Sass -o src/Styles/CSS",
-    "build-docs": "npm jsdoc -r -c ./documentation/config.json -d ./documentation/docs -R ./README.md",
+    "build-docs": "jsdoc src -r -c ./documentation/config.json -d ./documentation/docs -R ./README.md",
     "dev": "npm-run-all -p watch-css start",
     "lint": "eslint src",
     "lint-fix": "eslint --fix src",
