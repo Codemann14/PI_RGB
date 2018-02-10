@@ -12,7 +12,8 @@
         "no-trailing-spaces": "off",
         "linebreak-style": "off",
         "no-underscore-dangle": "off",
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "no-plusplus": "off"
     },
     "env": {
         "browser": true,
