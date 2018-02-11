@@ -15,12 +15,12 @@ to their [webpage](https://nodejs.org/en/download/) and download the latest vers
 ## NPM Script Commands ##
 * **npm install** - Install the project dependencies
 * **npm run dev** - Run the dev project
-* **npm run esw** - Run eslint in watch mode
 * **npm run test** - Run jest/enzyme unit tests
 * **npm run build-docs** - Build the jsdoc code documentation, outputs to the documentation folder
 * **npm run build-css** - Transpiles SASS to CSS
 * **npm run watch-css** - Transpiles SASS to CSS on save(runs automatically with npm run dev)
 * **npm run lint** - Run eslint
 * **npm run lint-fix** - Run eslint in fix mode
+* **npm run lint-watch** - Run eslint in watch mode
 * **npm run build** - Builds a production version
 
