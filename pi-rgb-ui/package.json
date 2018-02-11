@@ -15,7 +15,7 @@
     "dev": "npm-run-all -p watch-css start",
     "lint": "eslint src",
     "lint-fix": "eslint --fix src",
-    "lint-watch": "esw --watch",
+    "lint-watch": "esw --watch src",
     "watch-css": "npm run build-css && node-sass-chokidar src/Styles/Sass -o src/Styles/CSS --watch --recursive",
     "start": "react-scripts start",
     "build": "react-scripts build",
