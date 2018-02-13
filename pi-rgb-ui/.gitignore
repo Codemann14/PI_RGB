@@ -6,7 +6,7 @@ package-lock.json
 /documentation/docs
 
 #css
-/src/Styles/CSS
+/src/Styles/CSS/*.css
 
 # dependencies
 /node_modules
