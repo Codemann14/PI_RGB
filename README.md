@@ -14,6 +14,6 @@ the LED strip. It uses a React Js UI and a Python Web Socket to send the necessa
 
 # Notices #
 
-[PI LED setup tutorial](https://dordnung.de/raspberrypi-ledstrip/ws2812)
+[Raspberry PI LED setup tutorial](https://dordnung.de/raspberrypi-ledstrip/ws2812)
 
 [WS281X Library](https://github.com/jgarff/rpi_ws281x)
