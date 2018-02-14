@@ -1,6 +1,3 @@
-# Test # 
-[ChangeLog](documentation/info/Changelog.md)
-
 # Web UI #
 
 This web page is built using React Js, using React's create-react-app tool. 
@@ -10,12 +7,12 @@ on the same network as the raspberry pi.
 
 # Dev Tools #
 
-## Nodejs ##
+### Nodejs ###
 
 Nodejs is needed to run the dev project. If you don't already have Node installed head over
 to their [webpage](https://nodejs.org/en/download/) and download the latest version. 
 
-## NPM Script Commands ##
+### NPM Script Commands ###
 * **npm install** - Install the project dependencies
 * **npm run dev** - Run the dev project
 * **npm run test** - Run jest/enzyme unit tests
