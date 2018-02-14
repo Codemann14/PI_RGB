@@ -4,6 +4,9 @@ This web page is built using React Js, using React's create-react-app tool.
 The reasion I chose a Web UI is for controlling the lights easily, from any device 
 on the same network as the raspberry pi. 
 
+# Test #
+
+{@tutorial Changelog}
 
 # Dev Tools #
 
