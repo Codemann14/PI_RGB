@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/Styles/Sass -o src/Styles/CSS",
-    "build-docs": "jsdoc src -r -c ./documentation/config.json -t ./node_modules/ink-docstrap/template -d ./documentation/docs -R ./README.md -u ./documentation/info",
+    "build-docs": "jsdoc src -r -c ./documentation/config.json -t ./node_modules/ink-docstrap/template -d ./documentation/docs -R ./README.md",
     "dev": "npm-run-all -p watch-css start",
     "lint": "eslint src",
     "lint-fix": "eslint --fix src",
