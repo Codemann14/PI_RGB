@@ -1,3 +1,6 @@
+# Test # 
+[ChangeLog](documentation/info/Changelog.md)
+
 # Web UI #
 
 This web page is built using React Js, using React's create-react-app tool. 

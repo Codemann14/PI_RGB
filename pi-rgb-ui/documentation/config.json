@@ -11,6 +11,18 @@
         "dictionaries": ["jsdoc","closure"]
     },
     "templates": {
+        "systemName"            : "PI_RGB",
+        "navType"               : "vertical",
+        "theme"                 : "yeti",
+        "linenums"              : true,
+        "collapseSymbols"       : false,
+        "inverseNav"            : true,
+        "outputSourceFiles"     : true ,
+        "outputSourcePath"      : true,
+        "syntaxTheme"           : "dark",
+        "search"                : true,
+
+
         "cleverLinks": false,
         "monospaceLinks": false,
         "default": {
