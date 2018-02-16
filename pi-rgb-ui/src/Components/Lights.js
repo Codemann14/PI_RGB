@@ -3,9 +3,6 @@ import { ChromePicker } from "react-color"
 
 import LightStore from "../Stores/LightsStore"
 
-// TODO: temp
-import WebSocket from "../Utils/WebSocket"
-
 
 /**
  * @namespace Components
@@ -44,17 +41,21 @@ class Lights extends Component {
         super()
 
         this.state = {
-            lightsArr: LightStore.getLights(),
-            width: 0,
-            height: 0,
+            lightsObjArr: [], // Holds the LED objects
+            width: window.innerWidth, // Canvas width 
+            height: 0, // Canvas height
+            colorPickerOpen: false, // Whether the color picker is shown or not
+            currentLEDClicked: null, // Holds the last LED that was clicked on, used to change specific LEDs color
         }
 
         this.getCanvasHeight = this.getCanvasHeight.bind(this)
+        this.handleCanvasClick = this.handleCanvasClick.bind(this)
         this.handleColorChange = this.handleColorChange.bind(this)
         this.handleLightsChanged = this.handleLightsChanged.bind(this)
+        this.isIntersect = this.isIntersect.bind(this)
+        this.makeLED = this.makeLED.bind(this)
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
         this.updateCanvas = this.updateCanvas.bind(this)
-        this.makeLED = this.makeLED.bind(this)
     }
 
     componentWillMount() {
@@ -63,10 +64,8 @@ class Lights extends Component {
     }
 
     componentDidMount() {
-        // TODO: Move this tho somewhere else
-        WebSocket.openWebSocket()
-
         this.updateWindowDimensions()
+        this.handleLightsChanged()
         this.updateCanvas()
     }
 
@@ -79,67 +78,83 @@ class Lights extends Component {
      * @author Cody Kurowski
      * @description This function calculates the proper height of the canvas.
      * 
+     * @param {number} width Width of page currently
+     * @param {array} lightsObjArr LED array
      * @returns {number} Height of canvas
      * @memberof Components.Lights
      */
-    getCanvasHeight() {
-        const numberOfLEDsPerRow = Math.floor(this.state.width / LEDEnum.DISTANCEBETWEENXPOS)
-        const numberOfRows = Math.ceil(this.state.lightsArr.length / numberOfLEDsPerRow)
+    getCanvasHeight(width, lightsObjArr) {
+        const numberOfLEDsPerRow = Math.floor(width / LEDEnum.DISTANCEBETWEENXPOS)
+        const numberOfRows = Math.ceil(lightsObjArr.length / numberOfLEDsPerRow)
         const height = ((numberOfRows - 1) * LEDEnum.DISTANCEBETWEENYPOS) + (LEDEnum.YPOSSTART * 2)
         return height
     }
 
-    handleColorChange(color) {
-        console.log(color.rgb)
-    }
-
-    handleLightsChanged() {
-        // TODO: Stuff
-    }
-
     /**
      * @author Cody Kurowski
-     * @description This function is called when the browser window is resized.
-     * This function will reset the width and height state to the current demensions.
-     * When called this will re-draw the canvas.
+     * @description This function handles a canvas click.
      * 
+     * @param {any} e click event
      * @memberof Components.Lights
      */
-    updateWindowDimensions() {
-        this.setState({ 
-            width: window.innerWidth, 
-        }, () => {
-            this.setState({
-                height: this.getCanvasHeight(),
-            }, () => {
-                this.updateCanvas()
-            })
+    handleCanvasClick(e) {
+        // Get mouse position
+        const clickPos = {
+            x: e.clientX,
+            y: e.clientY,
+        }
+
+        this.state.lightsObjArr.forEach((circle) => {
+            if (this.isIntersect(clickPos, circle)) {
+                // Open color picker and set this.state.currentLEDClicked
+                this.setState({
+                    colorPickerOpen: true,
+                    currentLEDClicked: circle.id,
+                })
+            }
         })
     }
 
+    handleColorChange(color) {
+        // TODO: Handle color picker color change
+        console.log(color.rgb)
+    }
+
     /**
      * @author Cody Kurowski
-     * @description This function is ran when the component mounts. 
-     * It is the function that builds the canvas.
+     * @description This function will get the lights from the LightStore.
+     * It then loops through those objects and figures out where each LED should be placed on canvas.
+     * After it is done figuring that out it sets the state to the new LED array.
      * 
      * @memberof Components.Lights
      */
-    updateCanvas() {
+    handleLightsChanged() {
         const ctx = this.canvas.getContext("2d")
+        const lightsArr = LightStore.getLights()
+        const lightsObjArr = []
 
         // Init starting positions
         let xPos = LEDEnum.XPOSSTART
         let yPos = LEDEnum.YPOSSTART
 
-        // Make multiple LEDs
-        this.state.lightsArr.forEach((LED) => {
-            // Make color
-            const color = `rgba(${LED.R}, ${LED.G}, ${LED.B}, 1)`
-
-            this.makeLED(ctx, xPos, yPos, LEDEnum.RADIUS, color)
+        // Make multiple LED objects
+        lightsArr.forEach((LED) => {
+            // Build LEDlight object
+            lightsObjArr.push({
+                id: LED.LEDPosition,
+                x: xPos,
+                y: yPos,
+                yOffsetTop: yPos + ctx.canvas.offsetTop, // Canvas Distance from top of the page
+                radius: LEDEnum.RADIUS,
+                color: {
+                    r: LED.R,
+                    g: LED.G,
+                    b: LED.B,
+                },
+            })
 
             // Check to see if the next one will be rendered outside the canvas
-            const checkXPos = xPos + LEDEnum.DISTANCEBETWEENXPOS + (LEDEnum.XPOSSTART)
+            const checkXPos = xPos + LEDEnum.DISTANCEBETWEENXPOS + LEDEnum.XPOSSTART
             if (checkXPos >= this.state.width) {
                 // Go down to the next line and set XPos back to start
                 yPos += LEDEnum.DISTANCEBETWEENYPOS 
@@ -147,7 +162,23 @@ class Lights extends Component {
             } else {
                 xPos += LEDEnum.DISTANCEBETWEENXPOS
             }  
-        })   
+        })
+
+        this.setState({ lightsObjArr })
+    }
+
+    /**
+     * @author Cody Kurowski
+     * @description This function checks which circle was clicked
+     * 
+     * @tutorial https://blog.lavrton.com/hit-region-detection-for-html5-canvas-and-how-to-listen-to-click-events-on-canvas-shapes-815034d7e9f8
+     * @param {object} point Point of canvas clicked
+     * @param {object} circle Circle object
+     * @returns {boolean} Whether that arc was clicked or not
+     * @memberof Lights
+     */
+    isIntersect(point, circle) {
+        return Math.sqrt(((point.x - circle.x) ** 2) + ((point.y - circle.yOffsetTop) ** 2)) < circle.radius
     }
 
     /**
@@ -172,13 +203,54 @@ class Lights extends Component {
         ctx.stroke()
     }
 
+    /**
+     * @author Cody Kurowski
+     * @description This function is called when the browser window is resized.
+     * This function will reset the width and height state to the current demensions.
+     * When called this will re-draw the canvas.
+     * 
+     * @memberof Components.Lights
+     */
+    updateWindowDimensions() {
+        this.setState({ 
+            width: window.innerWidth, 
+        }, () => {
+            this.setState({
+                height: this.getCanvasHeight(this.state.width, this.state.lightsObjArr),
+            }, () => {
+                this.updateCanvas()
+            })
+        })
+    }
+
+    /**
+     * @author Cody Kurowski
+     * @description This function is ran when the component mounts. 
+     * It is the function that builds the canvas.
+     * 
+     * @memberof Components.Lights
+     */
+    updateCanvas() {
+        const ctx = this.canvas.getContext("2d")
+
+        // Make multiple LEDs
+        this.state.lightsObjArr.forEach((LED) => {
+            // Make color
+            const color = `rgba(${LED.color.r}, ${LED.color.g}, ${LED.color.b}, 1)`
+
+            this.makeLED(ctx, LED.x, LED.y, LED.radius, color)
+        })   
+    }
+
     render() {
-        const { width, height } = this.state
+        const { width, height, colorPickerOpen } = this.state
 
         return (
             <div className="text-center">
-                <canvas ref={(canvas) => { this.canvas = canvas }} width={width} height={height} />
-                <ChromePicker disableAlpha={true} onChangeComplete={this.handleColorChange} />
+                <canvas ref={(canvas) => { this.canvas = canvas }} width={width} height={height} onClick={(e) => { this.handleCanvasClick(e) }} />
+                {
+                    colorPickerOpen && <ChromePicker disableAlpha={true} onChangeComplete={this.handleColorChange} />
+                }
             </div>
         )
     }
