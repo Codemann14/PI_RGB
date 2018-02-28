@@ -15,7 +15,7 @@
         "navType"               : "vertical",
         "theme"                 : "yeti",
         "linenums"              : true,
-        "collapseSymbols"       : false,
+        "collapseSymbols"       : true,
         "inverseNav"            : true,
         "outputSourceFiles"     : true ,
         "outputSourcePath"      : true,
