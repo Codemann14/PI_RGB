@@ -4,7 +4,6 @@ import LightActions from "../Actions/LightActions"
 import LightStore from "../Stores/LightsStore"
 
 // TODO: Color Picker in Modal and Close it
-// TODO: Shadow bug --> Showing wrong color
 
 /**
  * @namespace Components
@@ -27,8 +26,8 @@ const LEDEnum = {
     XPOSSTART: 30,
     /** Y Positsion of the first LED circle */
     YPOSSTART: 30,
-    /** Blur distance of Shadow */
-    SHADOWBLUR: 8,
+    /** Line width of LED border */
+    LINEWIDTH: 5,
 }
 
 
@@ -231,14 +230,13 @@ class Lights extends Component {
      * @memberof Components.Lights
      */
     makeLED(ctx, XPos, YPos, radius, color) {       
-        ctx.shadowColor = color
-        ctx.shadowBlur = LEDEnum.SHADOWBLUR
+        ctx.strokeStyle = color
         ctx.fillStyle = color
-        ctx.strokeStyle = color  
+        ctx.lineWidth = LEDEnum.LINEWIDTH          
         ctx.beginPath()  
-        ctx.arc(XPos, YPos, radius, 0, 2 * Math.PI) 
-        ctx.stroke()       
-        ctx.fill()           
+        ctx.arc(XPos, YPos, radius, 0, 2 * Math.PI)        
+        ctx.fill()   
+        ctx.stroke()        
     }
 
     /**
