@@ -10,13 +10,14 @@ import Dispatcher from "../Dispatcher"
  * @author Cody Kurowski
  * 
  * @memberOf Actions
- * @namespace LightActions
+ * @constructor 
  */
 const LightActions = {
 
     /**
      * @author Cody Kurowski
      * @description This function handles the change of an LED
+     * 
      * 
      * @memberOf Actions.LightActions
      * @param {number} LEDPosition The position of the LED
