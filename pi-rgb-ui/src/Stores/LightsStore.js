@@ -1,5 +1,6 @@
 import { EventEmitter } from "events" 
 import Dispatcher from "../Dispatcher"
+import LightActionTypes from "../ActionTypes/LightActionTypes"
 
 // TODO: TEMP
 import Mocklights from "../Components/MockLights"
@@ -29,6 +30,15 @@ class LightStore extends EventEmitter {
 
     handleActions(action) {
         switch (action.Type) {
+        case LightActionTypes.CHANGE_LED_COLOR: 
+            this.lights[action.Data.LEDPosition - 1] = {
+                LEDPosition: action.Data.LEDPosition,
+                R: action.Data.R,
+                B: action.Data.B,
+                G: action.Data.G,
+            }
+            this.emit("LIGHTS_CHANGED")
+            break
         default:
             break
         }

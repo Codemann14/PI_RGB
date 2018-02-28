@@ -4,13 +4,9 @@
  */
 
 /**
- * @namespace ActionTypes.LightActionTypes
- */
-
-/**
  * @author Cody Kurowski
  * 
- * @memberOf ActionTypes.LightActionTypes
+ * @memberOf ActionTypes
  * @enum {string}
  */
 const LightActionTypes = {

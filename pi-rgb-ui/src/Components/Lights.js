@@ -1,8 +1,10 @@
 import React, { Component } from "react"
 import { ChromePicker } from "react-color"
-
+import LightActions from "../Actions/LightActions"
 import LightStore from "../Stores/LightsStore"
 
+// TODO: Color Picker in Modal and Close it
+// TODO: Shadow bug --> Showing wrong color
 
 /**
  * @namespace Components
@@ -25,6 +27,8 @@ const LEDEnum = {
     XPOSSTART: 30,
     /** Y Positsion of the first LED circle */
     YPOSSTART: 30,
+    /** Blur distance of Shadow */
+    SHADOWBLUR: 8,
 }
 
 
@@ -45,11 +49,14 @@ class Lights extends Component {
             width: window.innerWidth, // Canvas width 
             height: 0, // Canvas height
             colorPickerOpen: false, // Whether the color picker is shown or not
+            colorPickerColor: { r: 51, g: 51, b: 51 }, // Holds current color of Chrome Color Picker
             currentLEDClicked: null, // Holds the last LED that was clicked on, used to change specific LEDs color
+            LEDHovered: false, // Whether to display a cursor or not
         }
 
         this.getCanvasHeight = this.getCanvasHeight.bind(this)
         this.handleCanvasClick = this.handleCanvasClick.bind(this)
+        this.handleCanvasHover = this.handleCanvasHover.bind(this)
         this.handleColorChange = this.handleColorChange.bind(this)
         this.handleLightsChanged = this.handleLightsChanged.bind(this)
         this.isIntersect = this.isIntersect.bind(this)
@@ -65,8 +72,7 @@ class Lights extends Component {
 
     componentDidMount() {
         this.updateWindowDimensions()
-        this.handleLightsChanged()
-        this.updateCanvas()
+        this.handleLightsChanged()        
     }
 
     componentWillUnmount() {
@@ -114,10 +120,38 @@ class Lights extends Component {
             }
         })
     }
+    
+    /**
+     * @author Cody Kurowski
+     * @description This function handles a canvas hover.
+     * 
+     * @param {any} e hover event
+     * @memberof Components.Lights
+     */
+    handleCanvasHover(e) {
+        // Get mouse position
+        const hoverPos = {
+            x: e.clientX,
+            y: e.clientY,
+        }
 
+        this.state.lightsObjArr.forEach((circle) => {
+            if (this.isIntersect(hoverPos, circle)) {
+                this.setState({ LEDHovered: true })
+            }
+        })
+    }
+
+    /**
+     * @author Cody Kurowski
+     * @description This function handles when the color picker changes a LEDs color
+     * 
+     * @param {objest} color 
+     * @memberof Components.Lights
+     */
     handleColorChange(color) {
-        // TODO: Handle color picker color change
-        console.log(color.rgb)
+        this.setState({ colorPickerColor: color })
+        LightActions.ChangeLEDColor(this.state.currentLEDClicked, color.rgb.r, color.rgb.g, color.rgb.b)
     }
 
     /**
@@ -164,7 +198,11 @@ class Lights extends Component {
             }  
         })
 
-        this.setState({ lightsObjArr })
+        this.setState({ lightsObjArr }, 
+            () => {
+                this.updateCanvas()
+            },
+        )        
     }
 
     /**
@@ -192,15 +230,15 @@ class Lights extends Component {
      * @param {string} color Color of the circle
      * @memberof Components.Lights
      */
-    makeLED(ctx, XPos, YPos, radius, color) {
-        ctx.beginPath()
-        ctx.shadowBlur = 10
+    makeLED(ctx, XPos, YPos, radius, color) {       
         ctx.shadowColor = color
-        ctx.arc(XPos, YPos, radius, 0, 2 * Math.PI)
+        ctx.shadowBlur = LEDEnum.SHADOWBLUR
         ctx.fillStyle = color
-        ctx.fill()
-        ctx.strokeStyle = color
-        ctx.stroke()
+        ctx.strokeStyle = color  
+        ctx.beginPath()  
+        ctx.arc(XPos, YPos, radius, 0, 2 * Math.PI) 
+        ctx.stroke()       
+        ctx.fill()           
     }
 
     /**
@@ -243,13 +281,19 @@ class Lights extends Component {
     }
 
     render() {
-        const { width, height, colorPickerOpen } = this.state
+        const { 
+            width, 
+            height, 
+            colorPickerOpen, 
+            colorPickerColor, 
+            LEDHovered,
+        } = this.state
 
         return (
             <div className="text-center">
-                <canvas ref={(canvas) => { this.canvas = canvas }} width={width} height={height} onClick={(e) => { this.handleCanvasClick(e) }} />
+                <canvas ref={(canvas) => { this.canvas = canvas }} width={width} height={height} style={{ cursor: LEDHovered ? "pointer" : "auto" }} onClick={(e) => { this.handleCanvasClick(e) }} onMouseMove={(e) => { this.handleCanvasHover(e) }} />
                 {
-                    colorPickerOpen && <ChromePicker disableAlpha={true} onChangeComplete={this.handleColorChange} />
+                    colorPickerOpen && <ChromePicker disableAlpha={true} color={colorPickerColor} onChangeComplete={this.handleColorChange} />
                 }
             </div>
         )
