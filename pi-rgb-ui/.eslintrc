@@ -14,7 +14,8 @@
         "no-underscore-dangle": "off",
         "class-methods-use-this": "off",
         "no-plusplus": "off",
-        "react/jsx-boolean-value": ["error","always"]
+        "react/jsx-boolean-value": ["error","always"],
+        "react/jsx-indent-props": "off"
     },
     "env": {
         "browser": true,
