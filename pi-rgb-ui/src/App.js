@@ -1,14 +1,14 @@
-import React, { Component } from "react"
+import React from "react"
+import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme"
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
+import getMuiTheme from "material-ui/styles/getMuiTheme"
 import Home from "./Pages/Home"
+import "./Styles/CSS/index.css"
 
-class App extends Component {
-    render() {
-        return (
-            <div>
-                <Home />
-            </div>
-        )
-    }
-}
+const App = () => (
+    <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <Home />
+    </MuiThemeProvider>
+)
 
 export default App

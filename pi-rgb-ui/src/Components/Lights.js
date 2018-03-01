@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { ChromePicker } from "react-color"
+import ColorPickerModal from "./ColorPickerModal"
 import LightActions from "../Actions/LightActions"
 import LightStore from "../Stores/LightsStore"
 
@@ -293,6 +294,7 @@ class Lights extends Component {
                 {
                     colorPickerOpen && <ChromePicker disableAlpha={true} color={colorPickerColor} onChangeComplete={this.handleColorChange} />
                 }
+                <ColorPickerModal />
             </div>
         )
     }
