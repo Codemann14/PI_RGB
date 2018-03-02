@@ -299,7 +299,14 @@ class Lights extends Component {
 
         return (
             <div className="text-center">
-                <canvas ref={(canvas) => { this.canvas = canvas }} width={width} height={height} style={{ cursor: LEDHovered ? "pointer" : "auto" }} onClick={(e) => { this.handleCanvasClick(e) }} onMouseMove={(e) => { this.handleCanvasHover(e) }} />
+                <canvas 
+                    ref={(canvas) => { this.canvas = canvas }} 
+                    width={width} 
+                    height={height} 
+                    style={{ cursor: LEDHovered ? "pointer" : "auto" }} 
+                    onClick={(e) => { this.handleCanvasClick(e) }} 
+                    onMouseMove={(e) => { this.handleCanvasHover(e) }} 
+                />
                
                 <ColorPickerModal 
                     currentLED={currentLEDClicked} 
