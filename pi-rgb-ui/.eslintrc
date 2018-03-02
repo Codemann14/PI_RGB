@@ -15,7 +15,8 @@
         "class-methods-use-this": "off",
         "no-plusplus": "off",
         "react/jsx-boolean-value": ["error","always"],
-        "react/jsx-indent-props": "off"
+        "react/jsx-indent-props": "off",
+        "react/forbid-prop-types": "off"
     },
     "env": {
         "browser": true,

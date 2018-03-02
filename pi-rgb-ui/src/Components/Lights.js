@@ -1,10 +1,7 @@
 import React, { Component } from "react"
-import { ChromePicker } from "react-color"
 import ColorPickerModal from "./ColorPickerModal"
 import LightActions from "../Actions/LightActions"
 import LightStore from "../Stores/LightsStore"
-
-// TODO: Color Picker in Modal and Close it
 
 /**
  * @namespace Components
@@ -49,7 +46,7 @@ class Lights extends Component {
             width: window.innerWidth, // Canvas width 
             height: 0, // Canvas height
             colorPickerOpen: false, // Whether the color picker is shown or not
-            colorPickerColor: { r: 51, g: 51, b: 51 }, // Holds current color of Chrome Color Picker
+            colorPickerColor: { r: 255, g: 255, b: 255 }, // Holds current color of Chrome Color Picker
             currentLEDClicked: null, // Holds the last LED that was clicked on, used to change specific LEDs color
             LEDHovered: false, // Whether to display a cursor or not
         }
@@ -58,6 +55,7 @@ class Lights extends Component {
         this.handleCanvasClick = this.handleCanvasClick.bind(this)
         this.handleCanvasHover = this.handleCanvasHover.bind(this)
         this.handleColorChange = this.handleColorChange.bind(this)
+        this.handleColorPickerModalClose = this.handleColorPickerModalClose.bind(this)
         this.handleLightsChanged = this.handleLightsChanged.bind(this)
         this.isIntersect = this.isIntersect.bind(this)
         this.makeLED = this.makeLED.bind(this)
@@ -150,8 +148,18 @@ class Lights extends Component {
      * @memberof Components.Lights
      */
     handleColorChange(color) {
-        this.setState({ colorPickerColor: color })
+        this.setState({ colorPickerColor: { r: color.rgb.r, g: color.rgb.g, b: color.rgb.b } })
         LightActions.ChangeLEDColor(this.state.currentLEDClicked, color.rgb.r, color.rgb.g, color.rgb.b)
+    }
+
+    /**
+     * @author Cody Kurowski
+     * @description This function closes the color picker modal
+     * 
+     * @memberof Components.Lights
+     */
+    handleColorPickerModalClose() {
+        this.setState({ colorPickerOpen: false })
     }
 
     /**
@@ -285,16 +293,21 @@ class Lights extends Component {
             height, 
             colorPickerOpen, 
             colorPickerColor, 
+            currentLEDClicked,
             LEDHovered,
         } = this.state
 
         return (
             <div className="text-center">
                 <canvas ref={(canvas) => { this.canvas = canvas }} width={width} height={height} style={{ cursor: LEDHovered ? "pointer" : "auto" }} onClick={(e) => { this.handleCanvasClick(e) }} onMouseMove={(e) => { this.handleCanvasHover(e) }} />
-                {
-                    colorPickerOpen && <ChromePicker disableAlpha={true} color={colorPickerColor} onChangeComplete={this.handleColorChange} />
-                }
-                <ColorPickerModal />
+               
+                <ColorPickerModal 
+                    currentLED={currentLEDClicked} 
+                    colorPickerModalOpen={colorPickerOpen} 
+                    color={colorPickerColor} 
+                    handleColorChange={this.handleColorChange} 
+                    handleModalClose={this.handleColorPickerModalClose}
+                />
             </div>
         )
     }

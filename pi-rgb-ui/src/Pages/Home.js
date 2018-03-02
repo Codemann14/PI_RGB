@@ -3,7 +3,7 @@ import Lights from "../Components/Lights"
 
 const Home = () => (
     <div>
-        <h1>PI RGB</h1>
+        <h1 className="text-center">PI RGB</h1>
         <Lights />
     </div>
 )
