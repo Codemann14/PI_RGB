@@ -36,8 +36,12 @@ def set_LED(pos, r, b, g):
 ## Called for every client connecting (after handshake)
 ## Sends the current LEDArr to all the clients
 def new_client(client, server):
+	global LED_BRIGHTNESS
 	print("New client connected and was given id %d" % client['id'])
-	server.send_message_to_all(json.dumps(LEDArr))
+	obj = {}
+	obj["LEDs"] = LEDArr
+	obj["Brightness"] = LED_BRIGHTNESS
+	server.send_message_to_all(json.dumps(obj))
 
 
 ## Called for every client disconnecting
@@ -57,7 +61,6 @@ def message_received(client, server, message):
 	# Check for a brightness change
 	# If it has changed re-init the strip
 	if (response["Data"]["Brightness"] != LED_BRIGHTNESS):
-		print LED_BRIGHTNESS
 		LED_BRIGHTNESS = response["Data"]["Brightness"]
 		set_strip()
 
@@ -76,7 +79,7 @@ def message_received(client, server, message):
 
 ## Init the LEDArr
 for i in range(1, LED_COUNT + 1):
-	set_LED(i, 0, 0, 0)
+	set_LED(i, 255, 255, 255)
 
 set_strip()
 
