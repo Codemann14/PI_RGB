@@ -1,4 +1,6 @@
+import WebSocketActions from "../Actions/WebSocketActions"
 
+// TODO: Document
 
 /**
  * @author Cody Kurowski
@@ -27,19 +29,23 @@ class WebSocketUtil {
     }
 
     _onOpen() {
-        console.log("open")
+        // TODO: Show a connection on the UI
     }
 
     _onMessage(e) {
-        console.log(e.data)
+        WebSocketActions.message(JSON.parse(e.data))
     }
 
-    _onError(e) {
-        console.log(e)
+    _onError() {
+        // TODO: Show a connection on the UI
     }
 
     _onClose() {
-        console.log("close")
+        // TODO: Show a connection on the UI
+    }
+
+    send(data) {
+        this.socket.send(data)
     }
 }
 

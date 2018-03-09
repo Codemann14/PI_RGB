@@ -12,6 +12,8 @@
 const LightActionTypes = {
     /** Change a LEDs color */
     CHANGE_LED_COLOR: "CHANGE_LED_COLOR",
+    /** Recieved LEDs */
+    RECIEVED_LEDS: "RECIEVED_LEDS",
 }
 
 

@@ -68,11 +68,6 @@ class Lights extends Component {
         LightStore.on("LIGHTS_CHANGED", this.handleLightsChanged)
     }
 
-    componentDidMount() {
-        this.updateWindowDimensions()
-        this.handleLightsChanged()        
-    }
-
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateWindowDimensions)
         LightStore.removeListener("LIGHTS_CHANGED", this.handleLightsChanged)
@@ -206,9 +201,19 @@ class Lights extends Component {
             }  
         })
 
+        // Detect if this is the first time the lightsObjArr is being updated
+        // If it is update call this.updateWindowDimensions() 
+        // This allows this.updateWindowDimensions() to call this.handleLightsChanged()
+        //      and not call itself again, which would cause a big loop issue
+        const firstRender = this.state.lightsObjArr.length === 0
+
         this.setState({ lightsObjArr }, 
             () => {
-                this.updateCanvas()
+                if (firstRender) {
+                    this.updateWindowDimensions()
+                } else {
+                    this.updateCanvas()       
+                }      
             },
         )        
     }
@@ -263,7 +268,7 @@ class Lights extends Component {
             this.setState({
                 height: this.getCanvasHeight(this.state.width, this.state.lightsObjArr),
             }, () => {
-                this.updateCanvas()
+                this.handleLightsChanged()
             })
         })
     }

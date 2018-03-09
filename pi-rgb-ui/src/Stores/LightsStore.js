@@ -1,9 +1,8 @@
 import { EventEmitter } from "events" 
 import Dispatcher from "../Dispatcher"
 import LightActionTypes from "../ActionTypes/LightActionTypes"
+import WebSocketActions from "../Actions/WebSocketActions"
 
-// TODO: TEMP
-import Mocklights from "../Components/MockLights"
 
 /**
  * @namespace Stores
@@ -21,7 +20,7 @@ class LightStore extends EventEmitter {
     constructor() {
         super()
 
-        this.lights = Mocklights.Data
+        this.lights = []
     }
 
     getLights() {
@@ -37,6 +36,19 @@ class LightStore extends EventEmitter {
                 B: action.Data.B,
                 G: action.Data.G,
             }
+
+            // Send the new data to the server through the Websocket
+            WebSocketActions.send({
+                Data: {
+                    LEDs: this.lights,
+                    Brightness: 255, // TODO: Allow changing
+                },
+            })
+
+            this.emit("LIGHTS_CHANGED")
+            break
+        case LightActionTypes.RECIEVED_LEDS:
+            this.lights = action.Data.LEDs
             this.emit("LIGHTS_CHANGED")
             break
         default:

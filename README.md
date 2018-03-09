@@ -6,7 +6,7 @@ the LED strip. It uses a React Js UI and a Python Web Socket to send the necessa
 [WS281X Library](https://github.com/jgarff/rpi_ws281x), allowing the LEDs to change color.
 
 
-# Installation #
+## Installation ##
 
 ### Python ###
 
@@ -22,14 +22,14 @@ TDB
 
 
 
-# History #
+## History ##
 
 ### 1.0.0 ###
 
 * Coming Soon
 
 
-# Notices #
+## Notices ##
 
 [Raspberry PI LED setup tutorial](https://dordnung.de/raspberrypi-ledstrip/ws2812)
 
