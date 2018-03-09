@@ -5,6 +5,23 @@ through a web tool. Which allows any device connected to the network the capabil
 the LED strip. It uses a React Js UI and a Python Web Socket to send the necessary data to the 
 [WS281X Library](https://github.com/jgarff/rpi_ws281x), allowing the LEDs to change color.
 
+
+# Installation #
+
+### Python ###
+
+To use the python code, update the *LED_COUNT* variable to match the count on the LED strip.
+
+```python
+LED_COUNT = 60
+```
+
+### UI ###
+
+TDB
+
+
+
 # History #
 
 ### 1.0.0 ###
@@ -17,3 +34,5 @@ the LED strip. It uses a React Js UI and a Python Web Socket to send the necessa
 [Raspberry PI LED setup tutorial](https://dordnung.de/raspberrypi-ledstrip/ws2812)
 
 [WS281X Library](https://github.com/jgarff/rpi_ws281x)
+
+[Python Websocket Server](https://github.com/Pithikos/python-websocket-server)
