@@ -70,6 +70,7 @@ describe("LightsStore", () => {
 
     beforeEach(() => {
         LightsStore.lights = LEDsObject.Data
+        LightsStore.brightness = 255
     })
 
     it("Updates LED color 1", () => {
@@ -96,5 +97,44 @@ describe("LightsStore", () => {
         }
 
         expect(LightsStore.lights[3]).toEqual(changedObj)
+    })
+
+    it("Updates the LED strip brightness to be 0", () => {
+        LightActions.ChangeStripBrightness(0)
+        expect(LightsStore.getBrightness()).toBe(0)
+    })
+
+    it("Updates the LED strip brightness to be 25", () => {
+        LightActions.ChangeStripBrightness(25)
+        expect(LightsStore.getBrightness()).toBe(25)
+    })
+
+    it("Changes all the LEDs colors", () => {
+        LightActions.ChangeAllLEDsColors(255, 255, 255)
+
+        const changedObj1 = {
+            LEDPosition: 1,
+            R: 255,
+            G: 255,
+            B: 255, 
+        }
+
+        const changedObj2 = {
+            LEDPosition: 5,
+            R: 255,
+            G: 255,
+            B: 255, 
+        }
+
+        const changedObj3 = {
+            LEDPosition: 10,
+            R: 255,
+            G: 255,
+            B: 255, 
+        }
+
+        expect(LightsStore.getLights()[0]).toEqual(changedObj1)
+        expect(LightsStore.getLights()[4]).toEqual(changedObj2)
+        expect(LightsStore.getLights()[9]).toEqual(changedObj3)
     })
 })

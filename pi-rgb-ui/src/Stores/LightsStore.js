@@ -21,10 +21,25 @@ class LightStore extends EventEmitter {
         super()
 
         this.lights = []
+        this.brightness = 255
+    }
+
+    getBrightness() {
+        return this.brightness
     }
 
     getLights() {
         return this.lights
+    }
+
+    _updateLEDStrip() {
+        // Send the new data to the server through the Websocket
+        WebSocketActions.send({
+            Data: {
+                LEDs: this.lights,
+                Brightness: this.brightness,
+            },
+        })
     }
 
     handleActions(action) {
@@ -37,18 +52,30 @@ class LightStore extends EventEmitter {
                 G: action.Data.G,
             }
 
-            // Send the new data to the server through the Websocket
-            WebSocketActions.send({
-                Data: {
-                    LEDs: this.lights,
-                    Brightness: 255, // TODO: Allow changing
-                },
-            })
+            this._updateLEDStrip()
 
             this.emit("LIGHTS_CHANGED")
             break
         case LightActionTypes.RECIEVED_LEDS:
             this.lights = action.Data.LEDs
+            this.brightness = action.Data.Brightness
+            this.emit("LIGHTS_CHANGED")
+            break
+        case LightActionTypes.BRIGHTNESS_CHANGED:
+            this.brightness = action.Data
+            this._updateLEDStrip()
+            this.emit("BRIGHTNESS_CHANGED")
+            break
+        case LightActionTypes.CHANGED_ALL_LEDS_COLOR:            
+            this.lights = this.lights.map(LED => 
+                ({
+                    LEDPosition: LED.LEDPosition,
+                    R: action.Data.R,
+                    B: action.Data.B,
+                    G: action.Data.G, 
+                }))
+
+            this._updateLEDStrip()
             this.emit("LIGHTS_CHANGED")
             break
         default:

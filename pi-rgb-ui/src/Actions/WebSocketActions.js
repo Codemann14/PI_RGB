@@ -19,7 +19,9 @@ const WebSocketActions = {
      * @param {object} data Data to send to the server
      */
     send(data) {
-        WebSocketUtil.send(JSON.stringify(data))
+        if (process.env.NODE_ENV !== "test") {
+            WebSocketUtil.send(JSON.stringify(data))
+        }        
     },
 
     /**

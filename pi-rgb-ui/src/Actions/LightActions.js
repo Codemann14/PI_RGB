@@ -16,7 +16,7 @@ const LightActions = {
 
     /**
      * @author Cody Kurowski
-     * @description This function handles the change of an LED
+     * @description This function handles the change of an LED.
      * 
      * 
      * @memberOf Actions.LightActions
@@ -33,6 +33,41 @@ const LightActions = {
                 R,
                 G,
                 B,  
+            },
+        })
+    },
+
+    /**
+     * @author Cody Kurowski
+     * @description This function handles the brightness change of the LED strip.
+     * The higher the number the brighter the LED strip.
+     * 
+     * @memberOf Actions.LightActions
+     * @param {number} brightness 0-255 brightness number
+     */
+    ChangeStripBrightness(brightness) {
+        Dispatcher.dispatch({
+            Type: LightActionTypes.BRIGHTNESS_CHANGED,
+            Data: brightness,
+        })
+    },
+
+    /**
+     * @author Cody Kurowski
+     * @description This function Dispathes the CHANGED_ALL_LEDS_COLOR signal to the LightStore.
+     * The store will handle changing all the LEDs.
+     * 
+     * @param {number} R Red Color
+     * @param {number} G Green Color
+     * @param {number} B Blue Color
+     */
+    ChangeAllLEDsColors(R, G, B) {
+        Dispatcher.dispatch({
+            Type: LightActionTypes.CHANGED_ALL_LEDS_COLOR,
+            Data: {
+                R,
+                G,
+                B,
             },
         })
     },
