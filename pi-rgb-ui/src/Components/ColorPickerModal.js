@@ -10,6 +10,11 @@ import FlatButton from "material-ui/FlatButton"
  * @description This component contains the color picker tool.
  * 
  * @memberOf Components
+ * @prop {object} color RGB color object
+ * @prop {number} currentLED The current LED that is being changed
+ * @prop {function} handleColorChange The function that will handle the color change
+ * @prop {bool} colorPickerModalOpen Whether the modal is open or not
+ * @prop {function} handleModalClose Function to handle closing the modal
  * @class ColorPickerModal
  */
 const ColorPickerModal = ({ 
