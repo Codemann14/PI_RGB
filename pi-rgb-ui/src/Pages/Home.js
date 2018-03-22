@@ -7,8 +7,14 @@ import ChangeAllLEDsBtn from "../Components/ChangeAllLEDsBtn"
 const Home = () => (
     <div>
         <h1 className="text-center">PI RGB</h1>
-        <BrightnessChanger />
-        <ChangeAllLEDsBtn />
+        <div className="row">
+            <div className="col-6">
+                <BrightnessChanger />
+            </div>
+            <div className="col-6">
+                <ChangeAllLEDsBtn />
+            </div>
+        </div>        
         <Lights />        
     </div>
 )

@@ -3,6 +3,9 @@ h4 {
 }
 
 .paper {
+    @media screen and (max-width: 768px) {
+        margin: 0 auto;
+    }
     margin: 10px;
     padding: 20px;
     height: 100px;

@@ -39,7 +39,7 @@ const ColorPickerModal = ({
             actions={actions}
             open={colorPickerModalOpen}
             onRequestClose={handleModalClose}
-            contentStyle={{ width: 400, textAlign: "center" }}
+            contentStyle={{ width: 300, textAlign: "center" }}
         >
 
             <div className="color-picker">

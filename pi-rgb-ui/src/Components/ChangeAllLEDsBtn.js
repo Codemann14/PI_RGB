@@ -19,7 +19,7 @@ class ChangeAllLEDsBtn extends Component {
 
         this.state = {
             colorPickerModalShown: false,
-            colorPickerColor: null,
+            colorPickerColor: { r: 255, g: 255, b: 255 },
         }
 
         this.handleColorChange = this.handleColorChange.bind(this)
@@ -53,7 +53,7 @@ class ChangeAllLEDsBtn extends Component {
         const { colorPickerColor, colorPickerModalShown } = this.state
 
         return (
-            <div>
+            <div className="change-all-btn-wrapper">
                 <RaisedButton 
                     label="Change All"
                     primary={true}

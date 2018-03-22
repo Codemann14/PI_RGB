@@ -5,6 +5,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme"
 import Home from "./Pages/Home"
 import WebSocketActions from "./Actions/WebSocketActions"
 import "./Styles/CSS/index.css"
+import "./Styles/CSS/responsiveGrid.css"
 
 class App extends Component {
     componentDidMount() {
