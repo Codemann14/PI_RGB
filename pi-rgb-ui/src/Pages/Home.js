@@ -8,10 +8,10 @@ const Home = () => (
     <div>
         <h1 className="text-center">PI RGB</h1>
         <div className="row">
-            <div className="col-6">
+            <div className="col-6-lg col-6-md col-6-sm col-12-xs">
                 <BrightnessChanger />
             </div>
-            <div className="col-6">
+            <div className="col-6-lg col-6-md col-6-sm col-12-xs">
                 <ChangeAllLEDsBtn />
             </div>
         </div>        
