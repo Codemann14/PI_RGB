@@ -1,5 +1,6 @@
 import Dispatcher from "../Dispatcher"
 import LightActionTypes from "../ActionTypes/LightActionTypes"
+import WebSocketActionTypes from "../ActionTypes/WebSocketActionTypes"
 import WebSocketUtil from "../Utils/WebSocket"
 
 /**
@@ -10,6 +11,18 @@ import WebSocketUtil from "../Utils/WebSocket"
  * @constructor 
  */
 const WebSocketActions = {
+
+    /**
+     * @author Cody Kurowski
+     * @description This is called when the Web Socket fails for any reason
+     * 
+     * @memberOf Actions.WebSocketActions
+     */
+    connectionFailed() {
+        Dispatcher.dispatch({
+            Type: WebSocketActionTypes.WEBSOCKET_CONNECTION_FAILED,
+        })
+    },
 
     /**
      * @author Cody Kurowski
@@ -32,6 +45,18 @@ const WebSocketActions = {
      */
     open() {
         WebSocketUtil.openWebSocket()
+    },
+
+    /**
+     * @author Cody Kurowski
+     * @description This is called when the Web Socket opens sucessfully
+     * 
+     * @memberOf Actions.WebSocketActions
+     */
+    opened() {
+        Dispatcher.dispatch({
+            Type: WebSocketActionTypes.WEBSOCKET_CONNECTION_OPENED,
+        }) 
     },
 
     /**

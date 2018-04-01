@@ -29,7 +29,7 @@ class WebSocketUtil {
     }
 
     _onOpen() {
-        // TODO: Show a connection on the UI
+        WebSocketActions.opened()
     }
 
     _onMessage(e) {
@@ -37,11 +37,11 @@ class WebSocketUtil {
     }
 
     _onError() {
-        // TODO: Show a connection on the UI
+        WebSocketActions.connectionFailed()
     }
 
     _onClose() {
-        // TODO: Show a connection on the UI
+        WebSocketActions.connectionFailed()
     }
 
     send(data) {
